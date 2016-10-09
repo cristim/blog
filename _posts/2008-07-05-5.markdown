@@ -1,0 +1,18 @@
+---
+author: mcristi
+comments: true
+date: 2008-07-05 15:23:00+00:00
+layout: post
+link: https://mcristi.wordpress.com/2008/07/05/5/
+slug: '5'
+title: No Content Found
+wordpress_id: 5
+categories:
+- Cell
+- IBM
+---
+
+Today I finished the Cell BEA training held by Duc Vianney and Brian Watt of IBM.  
+It was a terrific experience and I learned a lot from it. Many thanks to the organizers!  
+  
+Cristi

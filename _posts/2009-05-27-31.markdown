@@ -1,0 +1,18 @@
+---
+author: mcristi
+comments: true
+date: 2009-05-27 23:42:15+00:00
+layout: post
+link: https://mcristi.wordpress.com/2009/05/28/31/
+slug: '31'
+title: No Content Found
+wordpress_id: 31
+---
+
+Hello,
+
+After reading some articles on phoronix that revealed some benchmarks where the older generation kernel appeared quite slow compared to those >= 2.6.29, I decided to change my default linux kernel from the default 2.6.28 provided by Ubuntu 9.04, to 2.6.30-r7 from the Ubuntu ppa. I got amazed about its speed and responsiveness and I can only recommend it to anyone.
+
+Cristi
+
+

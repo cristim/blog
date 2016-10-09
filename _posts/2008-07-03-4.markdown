@@ -1,0 +1,28 @@
+---
+author: mcristi
+comments: true
+date: 2008-07-03 22:49:00+00:00
+layout: post
+link: https://mcristi.wordpress.com/2008/07/03/4/
+slug: '4'
+title: No Content Found
+wordpress_id: 4
+categories:
+- coreboot kvm qemu uclibc
+---
+
+Hello,  
+  
+As part of [my GSoC project](http://code.google.com/soc/2008/coresystems/appinfo.html?csaid=ED0729A9DB64B39B), I'm working on a [coreboot](http://coreboot.org/) payload that contains a Linux kernel with [KVM](http://kvm.qumranet.com/) enabled, and a small userland that will contain KVM-qemu.  
+  
+Currently I only have the kernel and the userland without KVM-qemu, but I'm working on porting it to uClibc, which seems to lack some things present in glibc that KVM-qemu needs in order to compile and run.  
+  
+[Here](http://tower.utcluj.ro/%7Ecristi/bios_stuff.tar.bz2) you can find what I have by now. To run it, extract both of the .bin files to your home directory and run  
+
+
+<blockquote>qemu -L ~ -hda /dev/null</blockquote>
+
+The code can be seen at http://repo.or.cz/w/kvm-coreboot.git, but it's work in progress  
+More to follow on this topic...  
+  
+Cristi
