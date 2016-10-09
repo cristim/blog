@@ -9,7 +9,7 @@ title: About
 wordpress_id: 2
 ---
 
-SysAdmin at HERE Maps, working on [https://maps.here.com](https://maps.here.com)
+SysAdmin at HERE Maps, working on [https://wego.here.com](https://wego.here.com)
 
 Living in Berlin
 
