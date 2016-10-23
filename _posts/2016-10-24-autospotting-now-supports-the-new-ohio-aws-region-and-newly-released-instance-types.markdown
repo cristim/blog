@@ -1,0 +1,115 @@
+---
+author: cristim
+comments: true
+layout: post
+categories:
+- AWS
+- EC2
+- Spot
+---
+
+I was quite busy over the last couple of months and it's been a while since I
+last blogged about [AutoSpotting](https://github.com/cristim/autospotting), but
+since today I touched it in a meaningful but kind of trivial way after a number
+of weeks, I thought it's maybe a good time to write a blog post about the
+changes that happened since my previous post in which I discussed software
+updates.
+
+# More users
+
+The most important thing is that I got more users to try out AutoSpotting. Since
+as of a month ago it is completely independent of my infrastructure at run time,
+the only way to count users is to see the number of times the CloudFormation
+template was downloaded using the CloudFormation user agent. This is not really
+accurate, since it also counts stack updates, but that's all I can get from my
+S3 access logs.
+
+Over the last three months, the CloudFormation template was launched or updated
+a number of 41 times, excluding the many times I launched or updated my own
+stacks during development, which I could see on my CloudFormation stack history.
+
+Out of these users, some got involved on Github by providing very valuable
+feedback and feature suggestions, and some were very cheerful after successfully
+using the software for a while, which feels amazing for any developer who
+experienced it and it motivated me to keep working even when I had very little
+time to allocate to this project.
+
+A significant number of issues were reported and discussed, some of them are
+already fixed and I'm doing my best to address the rest as quickly as possible.
+
+Thank you all for the great feedback and please keep it coming!
+
+# Features released since my previous blog post
+
+I used to keep a kind of changelog at the end of my [first blog post about AutoSpotting](https://mcristi.wordpress.com/2016/04/21/my-approach-at-making-aws-ec2-affordable-automatic-replacement-of-autoscaling-nodes-with-equivalent-spot-instances),
+but I eventually stopped doing it.
+
+I will try to be more disciplined about this, and I will try to keep in in the
+source code, but also blog about it whenever I have a significant release, like
+today's one.
+
+Today I added support for the new Ohio region and the recently launched instance
+types. Many thanks for this latest update go to the
+[ec2instances.info](http://ec2instances.info) project, which provides the data
+that makes this kind of update a trivial change on my side.
+
+Below I tried to compile a short changelog since my last update there, and I am impressed about how much happened in just three months:
+
+- 23 July
+  - CI/CD configuration using Travis CI, so every commit is built into an
+    installable object.
+  - Available tests(currently we still don't have any) are being executed and
+    test coverage is tracked and showed on GitHub as a repo badge.
+- 11 August
+  - Bug fix for environments using the AssociatePublicIpAddress flag, where
+    spot instances could not be launched before.
+- 16 August
+  - Launch spot instances in the same availability zone where we have an on-
+    demand instance, and terminate an on-demand instance from the same
+    availability zone. This solved a lot of tricky edge cases that used to
+    cause spinning conditions, and simplified the code logic a lot. 
+- 20 August
+  - Massive code cleanups, in which about 20% of the previous code base was
+    deleted. This was achieved by using CloudFormation for creating the
+    CloudWatch event generator, which previously used to be created based on the
+    author's SNS topic using API calls and required that the Lambda function
+    also implemented a CloudFormation custom resource, not just the EC2 instance replacement logic.
+  - This cleanup also reduced the runtime dependency on the author's AWS
+    account, since the event generator is installed in the user's AWS account.
+- 23 September
+  - Fully stand-alone at runtime, no longer depending on anything except for API
+    calls on AWS endpoints, while previously it used to keep checking for the
+    latest software version and downloading it at runtime.
+  - This reduces the runtime costs to just a few cents per month, only what it
+    costs for the bandwidth consumed by Lambda when using the AWS API endpoints.
+  - The software no longer updates itself, and going forward relies on the user
+    doing CloudFormation stack updates, initially based on a prefix of the Git
+    SHA hash.
+- 24 September
+  - Bug fix for [#16](https://github.com/cristim/autospotting/issues/16), spot instances failed to launch in case the AutoScaling
+    group had no SSH key configured, and also handle some related cases.
+- 26 September
+  - Allow TravisCI build numbers to be used for updating the software via
+    CloudFormation in addition to the git SHA hash prefix.
+- 6 October
+  - Finite log retention for the CloudWatch logs generated by Lambda, by default
+    keeping log entries for up to a week, but extensible using CloudFormation.
+- 9 October
+  - The AutoSpotting project now also has a dedicated
+    [website](http://autospotting.cloudprowess.com) backed by the GitHub repository.
+- 23 October
+  - Add support for the new Ohio AWS region
+  - Add support in all the regions for the newly released instance types:
+    m4.16xlarge, p2.xlarge, p2.8xlarge, p2.16xlarge and x1.16xlarge
+
+These were just the major changes in functionality over the last three months.
+In addition, there were lots of small non-functional code fixes, more reliable
+execution, better logging, various cleanups and also documentation updates,
+hopefully making it easier to install and use. 
+
+Due to a busy schedule over the last couple of months I was barely able to touch
+it, but I expect and hope to have more time to spend on this going forward.
+
+Thanks again to all my awesome users!
+
+-Cristi
